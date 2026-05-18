@@ -64,7 +64,6 @@ const StudyNookStats = () => {
 
   return (
     <section className="relative w-full bg-[#050507] text-white py-32 px-6 overflow-hidden my-16">
-      {/* 🌌 SILENT AMBIENT LIGHTING (No heavy circular blobs, just soft horizon glow) */}
       <div className="absolute inset-0 pointer-events-none z-0">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80%] h-[1px] bg-gradient-to-r from-transparent via-zinc-800 to-transparent" />
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[150px] bg-violet-500/[0.04] blur-[100px] rounded-full" />

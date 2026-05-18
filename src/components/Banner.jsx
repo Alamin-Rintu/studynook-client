@@ -3,7 +3,7 @@
 import { Button, Chip } from "@heroui/react";
 import React from "react";
 import Image from "next/image";
-import { MdPeople, MdStar, MdVerified } from "react-icons/md";
+import { MdOutlineExplore, MdPeople, MdStar, MdVerified } from "react-icons/md";
 
 // Images
 import roomImg1 from "../../public/assests/Banner.jpg";
@@ -122,19 +122,21 @@ const Banner = () => {
                          bg-transparent hover:bg-zinc-900 hover:text-white 
                          transition-all duration-300 active:scale-[0.98]"
               >
-                Explore Rooms
+                Explore Rooms <MdOutlineExplore />
               </Button>
             </Link>
 
-            <Button
-              size="lg"
-              className="rounded-2xl px-8 py-6 text-base font-semibold text-white shadow-lg hover:shadow-xl transition hover:scale-[1.02]"
-              style={{
-                background: "linear-gradient(135deg, #7C3AED, #3B82F6)",
-              }}
-            >
-              List Your Room
-            </Button>
+            <Link href={"/addRoom"}>
+              <Button
+                size="lg"
+                className="rounded-2xl px-8 py-6 text-base font-semibold text-white shadow-lg hover:shadow-xl transition hover:scale-[1.02]"
+                style={{
+                  background: "linear-gradient(135deg, #7C3AED, #3B82F6)",
+                }}
+              >
+                List Your Room
+              </Button>
+            </Link>
           </div>
         </div>
 
