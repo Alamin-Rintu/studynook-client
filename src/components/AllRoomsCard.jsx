@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 import { MdPeople, MdStar, MdLocationOn } from "react-icons/md";
 import Link from "next/link";
+import { Button } from "@heroui/react";
 
 const AllRoomsCard = ({ room }) => {
   return (
@@ -73,9 +74,9 @@ const AllRoomsCard = ({ room }) => {
         </div>
 
         {/* BUTTON */}
-        <button className="w-full mt-3 py-2.5 rounded-xl bg-gradient-to-r from-violet-600 to-blue-600 text-white font-medium hover:opacity-90 transition">
+        <Button className="w-full mt-3 py-2.5 rounded-xl bg-gradient-to-r from-violet-600 to-blue-600 text-white font-medium hover:opacity-90 transition">
          <Link href={`/rooms/${room._id}`}> View Details</Link>
-        </button>
+        </Button>
 
       </div>
     </div>

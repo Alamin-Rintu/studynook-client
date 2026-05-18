@@ -1,6 +1,14 @@
+"use client";
+import { authClient } from "@/lib/auth-client";
+import { Avatar, Button } from "@heroui/react";
 import Link from "next/link";
+import { IoIosLogOut } from "react-icons/io";
+import { ClockLoader } from "react-spinners";
 
 const Navbar = () => {
+  const { data: session, isPending } = authClient.useSession();
+  const user = session?.user;
+  console.log(user);
   return (
     <div className="container mx-auto flex justify-between items-center p-5 border-b">
       <div>
@@ -25,8 +33,29 @@ const Navbar = () => {
       </ul>
 
       <div className="flex items-center gap-2">
-        <Link href={"/login"}>Login</Link>
-        <Link href={"/register"}>Register</Link>
+        {isPending ? (
+          <ClockLoader size={25} />
+        ) : user ? (
+          <>
+            <Button className={"text-red-500 rounded-lg"} variant="outline">
+              <IoIosLogOut /> Log Out
+            </Button>
+            <Avatar>
+              <Avatar.Image
+                referrerPolicy="no-referrer"
+                alt="John Doe"
+                src={user?.image}
+              />
+              <Avatar.Fallback>{user?.name[0]}</Avatar.Fallback>
+            </Avatar>
+          </>
+        ) : (
+          <>
+            {" "}
+            <Link href={"/login"}>Login</Link>
+            <Link href={"/register"}>Register</Link>
+          </>
+        )}
       </div>
     </div>
   );
