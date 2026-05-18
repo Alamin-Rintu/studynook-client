@@ -2,6 +2,7 @@
 
 import React from "react";
 import { Button, Input, Label, TextArea, TextField } from "@heroui/react";
+import toast from "react-hot-toast";
 
 const floors = [
   "Ground Floor",
@@ -31,19 +32,29 @@ const amenities = [
 ];
 
 const AddRoomPage = () => {
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
-    const data = Object.fromEntries(formData.entries());
+    const roomsData = Object.fromEntries(formData.entries());
 
     const selectedAmenities = Array.from(
       e.currentTarget.querySelectorAll('input[type="checkbox"]:checked'),
     ).map((el) => el.value);
 
-    data.amenities = selectedAmenities;
+    roomsData.amenities = selectedAmenities;
 
-    console.log(data);
+    console.log(roomsData);
+
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/rooms`, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(roomsData),
+    });
+    const rooms = await res.json();
+    if(rooms){
+      toast.success("Successfully added Rooms")
+    }
   };
 
   return (
@@ -145,7 +156,11 @@ const AddRoomPage = () => {
 
             {/* BUTTONS */}
             <div className="flex items-center justify-end gap-4">
-              <Button type="button" variant="outline" className={"h-12 px-6 rounded-xl font-medium"}>
+              <Button
+                type="button"
+                variant="outline"
+                className={"h-12 px-6 rounded-xl font-medium"}
+              >
                 Cancel
               </Button>
 
