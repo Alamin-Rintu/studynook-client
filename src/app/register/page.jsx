@@ -47,6 +47,12 @@ const RegisterPage = () => {
     console.log(data, error);
   };
 
+  const handleGoogleLogin = async () => {
+    const data = await authClient.signIn.social({
+      provider: "google",
+    });
+  };
+
   return (
     <div className="max-w-7xl mx-auto min-h-screen grid grid-cols-1 lg:grid-cols-2 items-center gap-10 px-4 py-10">
       {/* Form Section */}
@@ -199,7 +205,7 @@ const RegisterPage = () => {
             </div>
 
             {/* Google Button */}
-            <Button
+            <Button onClick={handleGoogleLogin}
               variant="bordered"
               type="button"
               className="w-full py-6 rounded-xl border border-default-300 hover:bg-default-100 transition"

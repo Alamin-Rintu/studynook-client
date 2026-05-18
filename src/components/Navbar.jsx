@@ -9,6 +9,10 @@ const Navbar = () => {
   const { data: session, isPending } = authClient.useSession();
   const user = session?.user;
   console.log(user);
+
+  const handleLogOut = async () => {
+    await authClient.signOut();
+  };
   return (
     <div className="container mx-auto flex justify-between items-center p-5 border-b">
       <div>
@@ -37,9 +41,6 @@ const Navbar = () => {
           <ClockLoader size={25} />
         ) : user ? (
           <>
-            <Button className={"text-red-500 rounded-lg"} variant="outline">
-              <IoIosLogOut /> Log Out
-            </Button>
             <Avatar>
               <Avatar.Image
                 referrerPolicy="no-referrer"
@@ -48,6 +49,13 @@ const Navbar = () => {
               />
               <Avatar.Fallback>{user?.name[0]}</Avatar.Fallback>
             </Avatar>
+            <Button
+              onClick={handleLogOut}
+              className={"text-red-500 rounded-lg"}
+              variant="outline"
+            >
+              Log Out <IoIosLogOut />
+            </Button>
           </>
         ) : (
           <>
