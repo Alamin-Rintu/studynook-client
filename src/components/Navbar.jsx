@@ -8,7 +8,6 @@ import { ClockLoader } from "react-spinners";
 const Navbar = () => {
   const { data: session, isPending } = authClient.useSession();
   const user = session?.user;
-  console.log(user);
 
   const handleLogOut = async () => {
     await authClient.signOut();

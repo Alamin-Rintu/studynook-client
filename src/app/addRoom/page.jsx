@@ -1,8 +1,8 @@
 "use client";
 
-import React from "react";
 import { Button, Input, Label, TextArea, TextField } from "@heroui/react";
 import toast from "react-hot-toast";
+import { authClient } from "@/lib/auth-client";
 
 const floors = [
   "Ground Floor",
@@ -32,6 +32,10 @@ const amenities = [
 ];
 
 const AddRoomPage = () => {
+  const { data: session } = authClient.useSession();
+  const user = session?.user;
+  console.log(user);
+
   const onSubmit = async (e) => {
     e.preventDefault();
 
@@ -43,6 +47,7 @@ const AddRoomPage = () => {
     ).map((el) => el.value);
 
     roomsData.amenities = selectedAmenities;
+    roomsData.ownerId = user?.id;
 
     console.log(roomsData);
 
@@ -52,8 +57,8 @@ const AddRoomPage = () => {
       body: JSON.stringify(roomsData),
     });
     const rooms = await res.json();
-    if(rooms){
-      toast.success("Successfully added Rooms")
+    if (rooms) {
+      toast.success("Successfully added Rooms");
     }
   };
 
