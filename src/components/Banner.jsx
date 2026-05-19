@@ -97,7 +97,7 @@ const Banner = () => {
           <div className="inline-flex items-center gap-2 bg-white border border-zinc-200 px-5 py-2 rounded-full shadow-sm">
             <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
             <span className="text-sm font-medium text-zinc-600">
-              120+ Rooms Available Now
+               Quiet • Productive • Smart Booking
             </span>
           </div>
 

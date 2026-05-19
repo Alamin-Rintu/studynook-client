@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Button } from "@heroui/react";
 import AllRoomsCard from "@/components/AllRoomsCard";
 import { BsHouseDown } from "react-icons/bs";
+import { IoIosArrowDropright } from "react-icons/io";
 
 const PopularRoomsSection = async () => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/rooms`, {
@@ -34,7 +35,7 @@ const PopularRoomsSection = async () => {
                          bg-transparent hover:bg-zinc-900 hover:text-white 
                          transition-all duration-300 active:scale-[0.98]"
             >
-              View all Rooms <BsHouseDown />
+              View all Rooms <IoIosArrowDropright />
             </Button>
           </Link>
         </div>
