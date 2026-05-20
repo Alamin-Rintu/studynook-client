@@ -9,12 +9,22 @@ import {
 } from "react-icons/fa";
 import { MdMeetingRoom, MdDelete, MdEdit } from "react-icons/md";
 import { IoFlash } from "react-icons/io5";
-import { Button } from "@heroui/react";
+import { Avatar, Button } from "@heroui/react";
 import Link from "next/link";
 import BookingForm from "@/components/BookingForm";
 import DeleteMyRoom from "@/components/DeleteMyRoom";
+import EditMyRoom from "@/components/EditMyRoom";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
+import { GrUserManager } from "react-icons/gr";
+import { RxTable } from "react-icons/rx";
 
 const RoomDetailsPage = async ({ params }) => {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+  const user = session?.user;
+  console.log(user);
   const { id } = await params;
 
   const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/rooms/${id}`, {
@@ -32,9 +42,7 @@ const RoomDetailsPage = async ({ params }) => {
     hourlyRate,
     amenities,
   } = room;
-
-  const isOwner = true;
-
+  const isOwner = user?.id === room?.ownerId;
   return (
     <div className="min-h-screen bg-gradient-to-br from-sky-50 via-white to-cyan-50 py-12 px-4 md:px-8">
       {/* BLUR BACKGROUND */}
@@ -171,12 +179,11 @@ const RoomDetailsPage = async ({ params }) => {
 
         {/* RIGHT SIDE */}
         <div className="relative">
-          <div className="sticky top-24">
+          <div className="sticky top-24 space-y-6">
+            {/* PRICE CARD */}
             <div className="relative overflow-hidden rounded-3xl bg-white/80 backdrop-blur-2xl border border-white shadow-2xl p-8">
-              {/* GLOW */}
               <div className="absolute -top-20 -right-20 h-52 w-52 bg-cyan-200 blur-3xl rounded-full opacity-50" />
 
-              {/* PRICE */}
               <div className="mb-8">
                 <p className="text-gray-500 mb-2">Price Per Hour</p>
 
@@ -184,21 +191,38 @@ const RoomDetailsPage = async ({ params }) => {
                   ${hourlyRate}
                   <span className="text-lg font-medium text-gray-400">/hr</span>
                 </h2>
+                <p className="text-gray-600 flex items-center mt-2 gap-1.5">
+                  <GrUserManager /> {capacity}
+                </p>
+                <p className="text-gray-600 mt-2 flex items-center gap-1.5"><RxTable /> {floor}</p>
               </div>
 
               <BookingForm room={room} />
 
-              {/* OWNER CONTROLS */}
-              {isOwner && (
+              {user && room.ownerId === user.id && (
                 <div className="flex items-center justify-center gap-5 mt-8">
-                  <button className="h-14 w-14 rounded-2xl bg-cyan-100 border border-cyan-200 flex items-center justify-center hover:shadow-[0_0_25px_rgba(6,182,212,0.5)] transition duration-300">
-                    <MdEdit className="text-2xl text-cyan-600" />
-                  </button>
-
-                  <DeleteMyRoom room={room}/>
+                  <EditMyRoom room={room} />
+                  <DeleteMyRoom room={room} />
                 </div>
               )}
             </div>
+
+            {user && room.ownerId === user.id && (
+              <div className="rounded-3xl bg-white/80 backdrop-blur-2xl border border-white shadow-xl p-6">
+                <p className="text-sm text-gray-500 mb-4">Listed by</p>
+
+                <div className="flex items-center gap-4">
+                  <Avatar>
+                    <Avatar.Image src={user?.image} alt={room?.owner?.name} />
+                  </Avatar>
+
+                  <div>
+                    <p className="font-semibold text-gray-800">{user?.name}</p>
+                    <p className="text-sm text-gray-500">{user?.email}</p>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>

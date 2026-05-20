@@ -9,15 +9,12 @@ const BookingForm = ({ room }) => {
   const { data: session } = authClient.useSession();
   const user = session?.user;
 
-  // STATES
   const [date, setDate] = useState("");
   const [startTime, setStartTime] = useState("8");
   const [endTime, setEndTime] = useState("9");
 
-  // ROOM PRICE
   const hourlyRate = room?.hourlyRate || 0;
 
-  // CALCULATION
   const totalHours = parseInt(endTime) - parseInt(startTime);
   const totalCost = totalHours * hourlyRate;
 
@@ -46,8 +43,11 @@ const BookingForm = ({ room }) => {
       body: JSON.stringify(bookingData),
     });
     const data = await res.json();
-    if (data) {
-      toast.success(`${room.roomName} is booked successfully`);
+
+    if (data.success) {
+      toast.success(`${room.roomName} booked successfully`);
+    } else {
+      toast.error(data.message);
     }
   };
 

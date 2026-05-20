@@ -1,4 +1,5 @@
 import { auth } from "@/lib/auth";
+import { Button } from "@heroui/react";
 import { headers } from "next/headers";
 import Image from "next/image";
 
@@ -24,7 +25,7 @@ const MyBookingPage = async () => {
   const cancelled = 0;
 
   return (
-    <div className="max-w-7xl mx-auto px-6 py-10 space-y-10">
+    <div className="container mx-auto px-6 py-10 space-y-10">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="p-6 rounded-2xl shadow bg-white border">
           <p className="text-gray-500">Total Bookings</p>
@@ -86,9 +87,9 @@ const MyBookingPage = async () => {
                 ${booking.totalCost}
               </p>
 
-              <button className="text-sm text-red-500 hover:underline">
+              <Button variant="outline" className="text-sm text-red-500 rounded-xl hover:underline">
                 Cancel
-              </button>
+              </Button>
             </div>
           </div>
         ))}

@@ -7,12 +7,14 @@ import { Button } from "@heroui/react";
 const AllRoomsCard = ({ room }) => {
   return (
     <div className="group bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-
       {/* IMAGE SECTION */}
       <div className="relative h-52 overflow-hidden">
-
         <Image
-          src={room.imageUrl}
+          src={
+            room.imageUrl && room.imageUrl.trim() !== ""
+              ? room.imageUrl
+              : "/fallback-room.jpg"
+          }
           alt={room.roomName}
           fill
           className="object-cover group-hover:scale-110 transition-transform duration-500"
@@ -35,20 +37,16 @@ const AllRoomsCard = ({ room }) => {
 
       {/* CONTENT */}
       <div className="p-5 space-y-3">
-
         {/* TITLE */}
         <h2 className="text-lg font-bold text-gray-900 line-clamp-1">
           {room.roomName}
         </h2>
 
         {/* DESCRIPTION */}
-        <p className="text-sm text-gray-500 line-clamp-2">
-          {room.description}
-        </p>
+        <p className="text-sm text-gray-500 line-clamp-2">{room.description}</p>
 
         {/* INFO ROW */}
         <div className="flex items-center justify-between text-sm text-gray-600">
-
           <div className="flex items-center gap-1">
             <MdPeople className="text-violet-500" />
             <span>{room.capacity}</span>
@@ -58,7 +56,6 @@ const AllRoomsCard = ({ room }) => {
             <MdLocationOn className="text-blue-500" />
             <span>{room.floor}</span>
           </div>
-
         </div>
 
         {/* AMENITIES */}
@@ -75,9 +72,8 @@ const AllRoomsCard = ({ room }) => {
 
         {/* BUTTON */}
         <Button className="w-full mt-3 py-2.5 rounded-xl bg-gradient-to-r from-violet-600 to-blue-600 text-white font-medium hover:opacity-90 transition">
-         <Link href={`/rooms/${room._id}`}> View Details</Link>
+          <Link href={`/rooms/${room._id}`}> View Details</Link>
         </Button>
-
       </div>
     </div>
   );
