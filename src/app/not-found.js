@@ -27,7 +27,7 @@ export default function NotFound() {
           <div className="inline-flex items-center gap-2 bg-white/70 backdrop-blur-xl border border-white/40 shadow-lg px-5 py-2 rounded-full">
             <Sparkles className="text-violet-600" size={18} />
             <span className="text-sm font-semibold text-gray-700">
-              Lost in Space
+              Oops! This page wandered off.
             </span>
           </div>
 
@@ -57,9 +57,9 @@ export default function NotFound() {
               </button>
             </Link>
 
-            <Link href="/contact">
+            <Link href="/rooms">
               <button className="group bg-white/70 backdrop-blur-xl border border-gray-200 hover:border-violet-300 transition-all duration-300 px-8 py-4 rounded-2xl font-semibold text-gray-700 flex items-center gap-3 shadow-lg">
-                Contact Support
+                View Rooms
                 <ArrowRight
                   size={18}
                   className="group-hover:translate-x-1 transition-transform duration-300"

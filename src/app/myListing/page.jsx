@@ -2,6 +2,9 @@ import React from "react";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import AllRoomsCard from "@/components/AllRoomsCard";
+import Link from "next/link";
+import { Button } from "@heroui/react";
+import { IoMdAdd } from "react-icons/io";
 
 const MyListingPage = async () => {
   const session = await auth.api.getSession({
@@ -14,7 +17,7 @@ const MyListingPage = async () => {
     `${process.env.NEXT_PUBLIC_SERVER_URL}/my-rooms/${user.id}`,
     {
       cache: "no-store",
-    }
+    },
   );
 
   const rooms = await res.json();
@@ -22,22 +25,29 @@ const MyListingPage = async () => {
   return (
     <div className="min-h-screen bg-zinc-50 py-10">
       <div className="max-w-7xl mx-auto px-6">
+        <div className="mb-10 flex justify-between">
+          <div>
+            <h1 className="text-4xl font-bold text-gray-900">My Listings</h1>
 
-        <div className="mb-10">
-          <h1 className="text-4xl font-bold text-gray-900">
-            My Listings
-          </h1>
-
-          <p className="text-gray-600 mt-2">
-            Manage your added study rooms
-          </p>
+            <p className="text-gray-600 mt-2">Manage your added study rooms</p>
+          </div>
+          <div>
+            <Link href={"/addRoom"}>
+              <Button
+                className="h-12 px-6 rounded-xl text-white font-medium"
+                style={{
+                  background: "linear-gradient(135deg, #7C3AED, #3B82F6)",
+                }}
+              >
+                <IoMdAdd /> Add Room
+              </Button>
+            </Link>
+          </div>
         </div>
 
         {rooms?.length === 0 ? (
           <div className="bg-white rounded-3xl py-20 text-center border">
-            <h2 className="text-2xl font-semibold">
-              No Listings Found
-            </h2>
+            <h2 className="text-2xl font-semibold">No Listings Found</h2>
 
             <p className="text-gray-500 mt-2">
               You haven't added any rooms yet

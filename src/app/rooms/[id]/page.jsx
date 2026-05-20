@@ -5,19 +5,21 @@ import {
   FaChair,
   FaSnowflake,
   FaCoffee,
+  FaArrowAltCircleLeft,
 } from "react-icons/fa";
 import { MdMeetingRoom, MdDelete, MdEdit } from "react-icons/md";
 import { IoFlash } from "react-icons/io5";
+import { Button } from "@heroui/react";
+import Link from "next/link";
+import BookingForm from "@/components/BookingForm";
+import DeleteMyRoom from "@/components/DeleteMyRoom";
 
 const RoomDetailsPage = async ({ params }) => {
   const { id } = await params;
 
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_SERVER_URL}/rooms/${id}`,
-    {
-      cache: "no-store",
-    }
-  );
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/rooms/${id}`, {
+    cache: "no-store",
+  });
 
   const room = await res.json();
 
@@ -31,7 +33,6 @@ const RoomDetailsPage = async ({ params }) => {
     amenities,
   } = room;
 
-  // example owner control
   const isOwner = true;
 
   return (
@@ -39,7 +40,16 @@ const RoomDetailsPage = async ({ params }) => {
       {/* BLUR BACKGROUND */}
       <div className="fixed top-0 left-0 h-72 w-72 bg-cyan-200/40 blur-3xl rounded-full -z-10" />
       <div className="fixed bottom-0 right-0 h-72 w-72 bg-purple-200/40 blur-3xl rounded-full -z-10" />
-
+      <Link href={"/rooms"}>
+        <Button
+          className={
+            "rounded-none border-none bg-transparent hover:bg-blue-400"
+          }
+          variant="outline"
+        >
+          <FaArrowAltCircleLeft /> Back
+        </Button>
+      </Link>
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* LEFT SIDE */}
         <div className="lg:col-span-2 space-y-8">
@@ -57,9 +67,7 @@ const RoomDetailsPage = async ({ params }) => {
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
 
               <div className="absolute bottom-6 left-6">
-                <h1 className="text-4xl font-black text-white">
-                  {roomName}
-                </h1>
+                <h1 className="text-4xl font-black text-white">{roomName}</h1>
 
                 <p className="text-gray-200 mt-2">{floor}</p>
               </div>
@@ -130,9 +138,7 @@ const RoomDetailsPage = async ({ params }) => {
 
           {/* AMENITIES */}
           <div className="bg-white/80 backdrop-blur-xl border border-white shadow-xl rounded-3xl p-8">
-            <h2 className="text-2xl font-bold text-gray-800 mb-6">
-              Amenities
-            </h2>
+            <h2 className="text-2xl font-bold text-gray-800 mb-6">Amenities</h2>
 
             <div className="grid grid-cols-2 md:grid-cols-3 gap-5">
               {amenities.map((item, index) => (
@@ -140,9 +146,7 @@ const RoomDetailsPage = async ({ params }) => {
                   key={index}
                   className="flex items-center gap-3 bg-gradient-to-r from-cyan-50 to-sky-50 border border-cyan-100 px-5 py-4 rounded-2xl hover:shadow-lg hover:-translate-y-1 transition duration-300"
                 >
-                  {item === "Wi-Fi" && (
-                    <FaWifi className="text-cyan-500" />
-                  )}
+                  {item === "Wi-Fi" && <FaWifi className="text-cyan-500" />}
 
                   {item === "Projector" && (
                     <FaProjectDiagram className="text-purple-500" />
@@ -178,67 +182,11 @@ const RoomDetailsPage = async ({ params }) => {
 
                 <h2 className="text-5xl font-black text-gray-800">
                   ${hourlyRate}
-
-                  <span className="text-lg font-medium text-gray-400">
-                    /hr
-                  </span>
+                  <span className="text-lg font-medium text-gray-400">/hr</span>
                 </h2>
               </div>
 
-              {/* FORM */}
-              <div className="space-y-5">
-                {/* DATE */}
-                <div>
-                  <label className="text-sm text-gray-600 block mb-2">
-                    Select Date
-                  </label>
-
-                  <input
-                    type="date"
-                    className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 outline-none focus:border-cyan-400"
-                  />
-                </div>
-
-                {/* START TIME */}
-                <div>
-                  <label className="text-sm text-gray-600 block mb-2">
-                    Start Time
-                  </label>
-
-                  <select className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 outline-none focus:border-cyan-400">
-                    <option>09:00 AM</option>
-                    <option>10:00 AM</option>
-                    <option>11:00 AM</option>
-                  </select>
-                </div>
-
-                {/* END TIME */}
-                <div>
-                  <label className="text-sm text-gray-600 block mb-2">
-                    End Time
-                  </label>
-
-                  <select className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 outline-none focus:border-cyan-400">
-                    <option>12:00 PM</option>
-                    <option>01:00 PM</option>
-                    <option>02:00 PM</option>
-                  </select>
-                </div>
-              </div>
-
-              {/* TOTAL */}
-              <div className="mt-8 border-t border-slate-200 pt-6 flex items-center justify-between">
-                <span className="text-gray-500">Total Cost</span>
-
-                <h3 className="text-3xl font-bold text-gray-800">$30</h3>
-              </div>
-
-              {/* BOOK BUTTON */}
-              <button className="relative mt-8 w-full overflow-hidden rounded-2xl py-4 font-bold text-lg text-white group shadow-xl">
-                <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 via-sky-500 to-purple-500 animate-pulse" />
-
-                <span className="relative z-10">Book Now</span>
-              </button>
+              <BookingForm room={room} />
 
               {/* OWNER CONTROLS */}
               {isOwner && (
@@ -247,9 +195,7 @@ const RoomDetailsPage = async ({ params }) => {
                     <MdEdit className="text-2xl text-cyan-600" />
                   </button>
 
-                  <button className="h-14 w-14 rounded-2xl bg-red-100 border border-red-200 flex items-center justify-center hover:shadow-[0_0_25px_rgba(239,68,68,0.5)] transition duration-300">
-                    <MdDelete className="text-2xl text-red-500" />
-                  </button>
+                  <DeleteMyRoom room={room}/>
                 </div>
               )}
             </div>
