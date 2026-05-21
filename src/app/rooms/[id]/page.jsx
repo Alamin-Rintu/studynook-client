@@ -19,6 +19,11 @@ import { headers } from "next/headers";
 import { GrUserManager } from "react-icons/gr";
 import { RxTable } from "react-icons/rx";
 
+export const metadata = {
+  title: "StudyNook || Details",
+  description: "Study room booking app",
+};
+
 const RoomDetailsPage = async ({ params }) => {
   const { token } = await auth.api.getToken({
     headers: await headers()

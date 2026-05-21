@@ -23,13 +23,11 @@ const Navbar = () => {
     setOpen(false);
   };
 
-  // PUBLIC LINKS
   const publicLinks = [
     { name: "Home", href: "/" },
     { name: "Rooms", href: "/rooms" },
   ];
 
-  // PRIVATE LINKS
   const privateLinks = [
     { name: "Add Room", href: "/addRoom" },
     { name: "My Listings", href: "/myListing" },
@@ -41,10 +39,14 @@ const Navbar = () => {
   return (
     <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur border-b">
       <div className="container mx-auto flex items-center justify-between p-4">
-
         {/* Logo */}
-        <Link href="/" className="text-2xl font-bold text-blue-600">
-          Study Nook
+        <Link href={"/"}>
+          <h1 className="text-3xl font-bold">
+            Study
+            <span className="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+              Nook
+            </span>
+          </h1>
         </Link>
 
         {/* Desktop Menu */}
@@ -84,13 +86,11 @@ const Navbar = () => {
 
         {/* Right Side */}
         <div className="flex items-center gap-3">
-
           {/* Loading */}
           {isPending ? (
-            <ClockLoader size={25}/>
+            <ClockLoader size={25} />
           ) : user ? (
             <div className="hidden md:flex items-center gap-3 relative">
-
               {/* Avatar */}
               <button
                 onClick={() => setProfileOpen(!profileOpen)}
@@ -101,19 +101,14 @@ const Navbar = () => {
                     referrerPolicy="no-referrer"
                     src={user?.image}
                   />
-                  <Avatar.Fallback>
-                    {user?.name?.[0]}
-                  </Avatar.Fallback>
+                  <Avatar.Fallback>{user?.name?.[0]}</Avatar.Fallback>
                 </Avatar>
-                <span className="text-sm font-medium">
-                  {user?.name}
-                </span>
+                <span className="text-sm font-medium">{user?.name}</span>
               </button>
 
               {/* Dropdown */}
               {profileOpen && (
                 <div className="absolute right-0 top-12 w-48 bg-white border rounded-lg shadow-lg p-2 space-y-2">
-
                   <Link
                     href="/myListing"
                     onClick={() => setProfileOpen(false)}
@@ -154,10 +149,7 @@ const Navbar = () => {
           )}
 
           {/* Mobile Menu Button */}
-          <button
-            onClick={() => setOpen(!open)}
-            className="md:hidden text-2xl"
-          >
+          <button onClick={() => setOpen(!open)} className="md:hidden text-2xl">
             {open ? <HiX /> : <HiOutlineMenu />}
           </button>
         </div>
@@ -166,7 +158,6 @@ const Navbar = () => {
       {/* Mobile Menu */}
       {open && (
         <div className="md:hidden border-t px-4 pb-4 space-y-3 bg-white">
-
           {/* Public */}
           {publicLinks.map((link) => (
             <Link

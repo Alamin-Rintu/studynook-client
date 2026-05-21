@@ -1,6 +1,11 @@
 import React from "react";
 import AllRoomsCard from "@/components/AllRoomsCard";
 
+export const metadata = {
+  title: "StudyNook || AllRooms",
+  description: "Study room booking app",
+};
+
 const AllRoomsPage = async () => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/rooms`, {
     cache: "no-store",
