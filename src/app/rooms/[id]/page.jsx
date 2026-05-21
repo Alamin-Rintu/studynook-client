@@ -7,7 +7,7 @@ import {
   FaCoffee,
   FaArrowAltCircleLeft,
 } from "react-icons/fa";
-import { MdMeetingRoom, MdDelete, MdEdit } from "react-icons/md";
+import { MdMeetingRoom} from "react-icons/md";
 import { IoFlash } from "react-icons/io5";
 import { Avatar, Button } from "@heroui/react";
 import Link from "next/link";
