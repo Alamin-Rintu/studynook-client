@@ -87,7 +87,7 @@ const RegisterPage = () => {
 
               <Input
                 placeholder="Enter your name"
-                classNames={{
+                className={{
                   inputWrapper:
                     "rounded-xl border border-default-200 shadow-sm",
                 }}
@@ -112,7 +112,7 @@ const RegisterPage = () => {
 
               <Input
                 placeholder="Enter your photo URL"
-                classNames={{
+                className={{
                   inputWrapper:
                     "rounded-xl border border-default-200 shadow-sm",
                 }}
@@ -137,7 +137,7 @@ const RegisterPage = () => {
 
               <Input
                 placeholder="Enter your email"
-                classNames={{
+                className={{
                   inputWrapper:
                     "rounded-xl border border-default-200 shadow-sm",
                 }}

@@ -1,9 +1,14 @@
+import CancelBooking from "@/components/CancelBooking";
 import { auth } from "@/lib/auth";
 import { Button } from "@heroui/react";
 import { headers } from "next/headers";
 import Image from "next/image";
 
 const MyBookingPage = async () => {
+  const { token } = await auth.api.getToken({
+    headers: await headers(),
+  });
+
   const session = await auth.api.getSession({
     headers: await headers(),
   });
@@ -12,8 +17,14 @@ const MyBookingPage = async () => {
 
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_SERVER_URL}/booking/${user?.id}`,
+    {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    },
   );
   const bookingData = await res.json();
+  // console.log(bookingData);
 
   const totalBookings = bookingData?.length || 0;
 
@@ -22,19 +33,12 @@ const MyBookingPage = async () => {
     0,
   );
 
-  const cancelled = 0;
-
   return (
     <div className="container mx-auto px-6 py-10 space-y-10">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="p-6 rounded-2xl shadow bg-white border">
           <p className="text-gray-500">Total Bookings</p>
           <h2 className="text-3xl font-bold">{totalBookings}</h2>
-        </div>
-
-        <div className="p-6 rounded-2xl shadow bg-white border">
-          <p className="text-gray-500">Cancelled</p>
-          <h2 className="text-3xl font-bold">{cancelled}</h2>
         </div>
 
         <div className="p-6 rounded-2xl shadow bg-white border">
@@ -55,10 +59,14 @@ const MyBookingPage = async () => {
           >
             <div className="w-full md:w-40 h-30 relative">
               <Image
-                src={booking.imageUrl}
-                alt={booking.roomName}
+                src={
+                  booking?.imageUrl?.trim()
+                    ? booking.imageUrl
+                    : "/placeholder.jpg"
+                }
+                alt={booking?.roomName || "Room"}
                 fill
-                className="rounded-xl object-cover"
+                className="object-cover"
               />
             </div>
 
@@ -86,10 +94,10 @@ const MyBookingPage = async () => {
               <p className="text-lg font-bold text-cyan-600">
                 ${booking.totalCost}
               </p>
-
-              <Button variant="outline" className="text-sm text-red-500 rounded-xl hover:underline">
-                Cancel
-              </Button>
+              <CancelBooking
+                bookingId={booking._id}
+                roomName={booking.roomName}
+              />
             </div>
           </div>
         ))}

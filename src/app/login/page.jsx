@@ -85,7 +85,7 @@ const LoginPage = () => {
 
               <Input
                 placeholder="Enter your email"
-                classNames={{
+                className={{
                   inputWrapper:
                     "rounded-xl border border-default-200 shadow-sm",
                 }}
@@ -120,7 +120,7 @@ const LoginPage = () => {
 
               <Input
                 placeholder="Enter your password"
-                classNames={{
+                className={{
                   inputWrapper:
                     "rounded-xl border border-default-200 shadow-sm",
                 }}

@@ -34,7 +34,7 @@ const amenities = [
 const AddRoomPage = () => {
   const { data: session } = authClient.useSession();
   const user = session?.user;
-  console.log(user);
+  // console.log(user);
 
   const onSubmit = async (e) => {
     e.preventDefault();

@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { IoIosLogOut } from "react-icons/io";
 import { HiOutlineMenu, HiX } from "react-icons/hi";
+import { ClockLoader } from "react-spinners";
 
 const Navbar = () => {
   const pathName = usePathname();
@@ -86,7 +87,7 @@ const Navbar = () => {
 
           {/* Loading */}
           {isPending ? (
-            <span className="text-sm text-gray-500">Loading...</span>
+            <ClockLoader size={25}/>
           ) : user ? (
             <div className="hidden md:flex items-center gap-3 relative">
 

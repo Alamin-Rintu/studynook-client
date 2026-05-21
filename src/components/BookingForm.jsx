@@ -37,9 +37,14 @@ const BookingForm = ({ room }) => {
         (parseInt(endTime) - parseInt(startTime)) * (room?.hourlyRate || 0),
     };
 
+    const { data: tokenData } = await authClient.token();
+    // console.log(tokenData);
     const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/booking`, {
       method: "POST",
-      headers: { "content-type": "application/json" },
+      headers: {
+        "content-type": "application/json",
+        authorization: `Bearer ${tokenData?.token}`,
+      },
       body: JSON.stringify(bookingData),
     });
     const data = await res.json();

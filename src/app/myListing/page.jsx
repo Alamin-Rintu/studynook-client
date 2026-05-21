@@ -17,32 +17,39 @@ const MyListingPage = async () => {
     `${process.env.NEXT_PUBLIC_SERVER_URL}/my-rooms/${user.id}`,
     {
       cache: "no-store",
+      headers: {
+        Authorization: `Bearer ${session?.session?.token}`,
+      },
     },
   );
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch rooms");
+  }
 
   const rooms = await res.json();
 
   return (
     <div className="min-h-screen bg-zinc-50 py-10">
       <div className="max-w-7xl mx-auto px-6">
-        <div className="mb-10 flex justify-between">
+        <div className="mb-10 flex justify-between items-center">
           <div>
             <h1 className="text-4xl font-bold text-gray-900">My Listings</h1>
 
             <p className="text-gray-600 mt-2">Manage your added study rooms</p>
           </div>
-          <div>
-            <Link href={"/addRoom"}>
-              <Button
-                className="h-12 px-6 rounded-xl text-white font-medium"
-                style={{
-                  background: "linear-gradient(135deg, #7C3AED, #3B82F6)",
-                }}
-              >
-                <IoMdAdd /> Add Room
-              </Button>
-            </Link>
-          </div>
+
+          <Link href="/addRoom">
+            <Button
+              className="h-12 px-6 rounded-xl text-white font-medium"
+              style={{
+                background: "linear-gradient(135deg, #7C3AED, #3B82F6)",
+              }}
+            >
+              <IoMdAdd size={20} />
+              Add Room
+            </Button>
+          </Link>
         </div>
 
         {rooms?.length === 0 ? (

@@ -20,15 +20,22 @@ import { GrUserManager } from "react-icons/gr";
 import { RxTable } from "react-icons/rx";
 
 const RoomDetailsPage = async ({ params }) => {
+  const { token } = await auth.api.getToken({
+    headers: await headers()
+  });
+  // console.log(token);
+
   const session = await auth.api.getSession({
     headers: await headers(),
   });
   const user = session?.user;
-  console.log(user);
+  // console.log(user);
   const { id } = await params;
 
   const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/rooms/${id}`, {
-    cache: "no-store",
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
   });
 
   const room = await res.json();
@@ -194,7 +201,9 @@ const RoomDetailsPage = async ({ params }) => {
                 <p className="text-gray-600 flex items-center mt-2 gap-1.5">
                   <GrUserManager /> {capacity}
                 </p>
-                <p className="text-gray-600 mt-2 flex items-center gap-1.5"><RxTable /> {floor}</p>
+                <p className="text-gray-600 mt-2 flex items-center gap-1.5">
+                  <RxTable /> {floor}
+                </p>
               </div>
 
               <BookingForm room={room} />
