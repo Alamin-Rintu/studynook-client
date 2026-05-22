@@ -33,35 +33,54 @@ const amenities = [
 ];
 
 const AddRoomPage = () => {
+  const {data:tokenData} = authClient.useToken(); 
   const { data: session } = authClient.useSession();
   const user = session?.user;
   // console.log(user);
 
-  const onSubmit = async (e) => {
-    e.preventDefault();
+const onSubmit = async (e) => {
+  e.preventDefault();
 
+  try {
     const formData = new FormData(e.currentTarget);
     const roomsData = Object.fromEntries(formData.entries());
 
     const selectedAmenities = Array.from(
-      e.currentTarget.querySelectorAll('input[type="checkbox"]:checked'),
+      e.currentTarget.querySelectorAll(
+        'input[type="checkbox"]:checked'
+      )
     ).map((el) => el.value);
 
     roomsData.amenities = selectedAmenities;
     roomsData.ownerId = user?.id;
 
-    console.log(roomsData);
+    console.log("Sending Data:", roomsData);
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/rooms`, {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify(roomsData),
-    });
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/rooms`,
+      {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          authorization: `Bearer ${tokenData?.token}`,
+        },
+        body: JSON.stringify(roomsData),
+      }
+    );
+
+    console.log("Response Status:", res.status);
+
     const rooms = await res.json();
+
+    console.log("Response Data:", rooms);
+
     if (rooms) {
       toast.success("Successfully added Rooms");
     }
-  };
+  } catch (error) {
+    console.log("ERROR:", error);
+  }
+};
 
   return (
     <div className="min-h-screen bg-gray-50 px-4 py-5 text-gray-900">

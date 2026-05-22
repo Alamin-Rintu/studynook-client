@@ -1,4 +1,5 @@
 "use client";
+import { authClient } from "@/lib/auth-client";
 import { AlertDialog, Button } from "@heroui/react";
 import { redirect } from "next/navigation";
 import toast from "react-hot-toast";
@@ -6,15 +7,23 @@ import { MdDelete } from "react-icons/md";
 
 const DeleteMyRoom = ({ room }) => {
   const handleDeleteRoom = async () => {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/rooms/${room?._id}`, {
-      method: "DELETE",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify(),
-    });
+    const { data: tokenData } = await authClient.token();
+    // console.log(tokenData);
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/rooms/${room?._id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "content-type": "application/json",
+           authorization: `Bearer ${tokenData?.token}`,
+        },
+        body: JSON.stringify(),
+      },
+    );
     const data = await res.json();
     if (data) {
       toast.success("This is deleted permanently");
-      redirect("/rooms")
+      redirect("/rooms");
     }
   };
 

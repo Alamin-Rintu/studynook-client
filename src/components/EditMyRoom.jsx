@@ -1,19 +1,14 @@
 "use client";
 
-import {
-  Button,
-  Input,
-  Label,
-  Modal,
-  Surface,
-  TextArea,
-} from "@heroui/react";
+import { Button, Input, Label, Modal, Surface, TextArea } from "@heroui/react";
 import { useState } from "react";
 import { MdEdit } from "react-icons/md";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { authClient } from "@/lib/auth-client";
 
 const EditMyRoom = ({ room }) => {
+  const router = useRouter();
   const { _id, roomName, description, imageUrl, floor, capacity, hourlyRate } =
     room;
 
@@ -50,7 +45,6 @@ const EditMyRoom = ({ room }) => {
     e.preventDefault();
 
     const form = e.target;
-
     const selectedAmenities = Array.from(
       form.querySelectorAll('input[type="checkbox"]:checked'),
     ).map((el) => el.value);
@@ -65,12 +59,14 @@ const EditMyRoom = ({ room }) => {
       amenities: selectedAmenities,
     };
 
+    const { data: tokenData } = await authClient.token();
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_SERVER_URL}/rooms/${_id}`,
       {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
+          authorization: `Bearer ${tokenData?.token}`,
         },
         body: JSON.stringify(updatedRoom),
       },
@@ -79,7 +75,8 @@ const EditMyRoom = ({ room }) => {
 
     if (data) {
       toast.success("Room updated successfully!");
-      window.location.reload();
+
+      router.refresh();
     } else {
       toast.error("Update failed!");
     }

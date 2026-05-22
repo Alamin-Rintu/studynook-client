@@ -6,7 +6,7 @@ import { Button } from "@heroui/react";
 
 const AllRoomsCard = ({ room }) => {
   return (
-    <div className="group bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+    <div className="group flex flex-col h-full bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
       {/* IMAGE SECTION */}
       <div className="relative h-52 overflow-hidden">
         <Image
@@ -20,32 +20,26 @@ const AllRoomsCard = ({ room }) => {
           className="object-cover group-hover:scale-110 transition-transform duration-500"
         />
 
-        {/* DARK OVERLAY */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
 
-        {/* PRICE BADGE */}
         <div className="absolute top-3 right-3 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-sm font-semibold shadow">
           ${room.hourlyRate}/hr
         </div>
 
-        {/* RATING BADGE */}
         <div className="absolute bottom-3 left-3 bg-black/70 text-white px-3 py-1 rounded-full flex items-center gap-1 text-sm">
           <MdStar className="text-yellow-400" />
           4.8
         </div>
       </div>
 
-      {/* CONTENT */}
-      <div className="p-5 space-y-3">
-        {/* TITLE */}
+      {/* CONTENT (flex-1 added here) */}
+      <div className="flex flex-col flex-1 p-5 space-y-3">
         <h2 className="text-lg font-bold text-gray-900 line-clamp-1">
           {room.roomName}
         </h2>
 
-        {/* DESCRIPTION */}
         <p className="text-sm text-gray-500 line-clamp-2">{room.description}</p>
 
-        {/* INFO ROW */}
         <div className="flex items-center justify-between text-sm text-gray-600">
           <div className="flex items-center gap-1">
             <MdPeople className="text-violet-500" />
@@ -70,10 +64,12 @@ const AllRoomsCard = ({ room }) => {
           ))}
         </div>
 
-        {/* BUTTON */}
-        <Button className="w-full mt-3 py-2.5 rounded-xl bg-gradient-to-r from-violet-600 to-blue-600 text-white font-medium hover:opacity-90 transition">
-          <Link href={`/rooms/${room._id}`}> View Details</Link>
-        </Button>
+        {/* BUTTON pushed to bottom */}
+        <div className="mt-auto pt-4">
+          <Button className="w-full py-2.5 rounded-xl bg-gradient-to-r from-violet-600 to-blue-600 text-white font-medium hover:opacity-90 transition">
+            <Link href={`/rooms/${room._id}`}>View Details</Link>
+          </Button>
+        </div>
       </div>
     </div>
   );

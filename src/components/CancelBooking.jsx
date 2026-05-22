@@ -3,15 +3,20 @@
 import { AlertDialog, Button } from "@heroui/react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { authClient } from "@/lib/auth-client";
 
 const CancelBooking = ({ bookingId, roomName }) => {
   const router = useRouter();
 
   const handleDeleteBooking = async () => {
+     const { data: tokenData } = await authClient.token();
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_SERVER_URL}/booking/${bookingId}`,
       {
         method: "DELETE",
+        headers: {
+          authorization: `Bearer ${tokenData?.token}`,
+        },
       },
     );
 
