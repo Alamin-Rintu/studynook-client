@@ -4,7 +4,6 @@ import { Button, Input, Label, TextArea, TextField } from "@heroui/react";
 import toast from "react-hot-toast";
 import { authClient } from "@/lib/auth-client";
 
-
 const floors = [
   "Ground Floor",
   "1st Floor",
@@ -33,25 +32,27 @@ const amenities = [
 ];
 
 const AddRoomPage = () => {
-  const {data:tokenData} = authClient.useToken(); 
   const { data: session } = authClient.useSession();
   const user = session?.user;
   // console.log(user);
 
-const onSubmit = async (e) => {
+ const onSubmit = async (e) => {
   e.preventDefault();
 
+  const { data: tokenData } = await authClient.token();
+
   try {
-    const formData = new FormData(e.currentTarget);
+    const formData = new FormData(e.target);
+
     const roomsData = Object.fromEntries(formData.entries());
 
-    const selectedAmenities = Array.from(
-      e.currentTarget.querySelectorAll(
-        'input[type="checkbox"]:checked'
-      )
-    ).map((el) => el.value);
+    // get all checked amenities
+    const selectedAmenities = formData.getAll("amenities");
 
+    // add amenities array
     roomsData.amenities = selectedAmenities;
+
+    // add owner id
     roomsData.ownerId = user?.id;
 
     console.log("Sending Data:", roomsData);
@@ -67,8 +68,6 @@ const onSubmit = async (e) => {
         body: JSON.stringify(roomsData),
       }
     );
-
-    console.log("Response Status:", res.status);
 
     const rooms = await res.json();
 
@@ -172,7 +171,7 @@ const onSubmit = async (e) => {
                     key={item}
                     className="flex items-center gap-2 border border-gray-200 rounded-xl px-3 py-2"
                   >
-                    <input type="checkbox" value={item} />
+                    <input name="amenities" type="checkbox" value={item} />
                     <span className="text-sm text-gray-700">{item}</span>
                   </label>
                 ))}
