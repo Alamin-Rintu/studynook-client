@@ -19,8 +19,10 @@ import Image from "next/image";
 import Link from "next/link";
 import toast from "react-hot-toast";
 import { FcGoogle } from "react-icons/fc";
+import { useRouter } from "next/navigation";
 
 const RegisterPage = () => {
+    const router = useRouter();
   const onSubmit = async (e) => {
     e.preventDefault();
 
@@ -36,8 +38,8 @@ const RegisterPage = () => {
     });
 
     if (data) {
-      toast.success("Account Created Successfully");
-      router.push("/");
+      toast.success("Registration successful! Please login.");
+      router.push("/login");
     }
 
     if (error) {
@@ -51,6 +53,10 @@ const RegisterPage = () => {
     const data = await authClient.signIn.social({
       provider: "google",
     });
+    if (data) {
+      toast.success("Google Login Successfull");
+    }
+    router.push("/");
   };
 
   return (
@@ -172,7 +178,7 @@ const RegisterPage = () => {
 
               <Input
                 placeholder="Enter your password"
-                classNames={{
+                className={{
                   inputWrapper:
                     "rounded-xl border border-default-200 shadow-sm",
                 }}
@@ -205,7 +211,8 @@ const RegisterPage = () => {
             </div>
 
             {/* Google Button */}
-            <Button onClick={handleGoogleLogin}
+            <Button
+              onClick={handleGoogleLogin}
               variant="bordered"
               type="button"
               className="w-full py-6 rounded-xl border border-default-300 hover:bg-default-100 transition"

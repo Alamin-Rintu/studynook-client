@@ -36,7 +36,7 @@ const LoginPage = () => {
     });
 
     if (data) {
-      toast.success("Account Created Successfully");
+      toast.success("Account LogIn Successfully");
     }
 
     if (error) {
@@ -50,6 +50,10 @@ const LoginPage = () => {
     const data = await authClient.signIn.social({
       provider: "google",
     });
+    if (data) {
+      toast.success("Google Login Successfull");
+    }
+    router.push("/");
   };
   return (
     <div className="max-w-7xl mx-auto min-h-screen grid grid-cols-1 lg:grid-cols-2 items-center gap-10 px-4 py-10">

@@ -1,6 +1,5 @@
 import CancelBooking from "@/components/CancelBooking";
 import { auth } from "@/lib/auth";
-import { Button } from "@heroui/react";
 import { headers } from "next/headers";
 import Image from "next/image";
 
@@ -19,6 +18,7 @@ const MyBookingPage = async () => {
   });
 
   const user = session?.user;
+  console.log(token)
 
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_SERVER_URL}/booking/${user?.id}`,

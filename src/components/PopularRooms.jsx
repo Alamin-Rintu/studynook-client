@@ -5,12 +5,12 @@ import { BsHouseDown } from "react-icons/bs";
 import { IoIosArrowDropright } from "react-icons/io";
 
 const PopularRoomsSection = async () => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/rooms`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/roomsData`, {
     cache: "no-store",
   });
 
   const rooms = await res.json();
-  const splitRooms = rooms.slice(0, 3);
+  const splitRooms = rooms.slice(0, 6);
   return (
     <div className="max-w-7xl mx-auto px-4 py-10">
       {/* HEADER */}

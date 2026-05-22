@@ -12,5 +12,5 @@ import { headers } from "next/headers";
 }
 
 export const config = {
-  matcher: ["/addRoom", "/myListing", "/rooms/:path"],
+  matcher: ["/addRoom", "/myListing", "/rooms/:id"],
 };
