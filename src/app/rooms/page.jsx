@@ -19,7 +19,6 @@ const AllRoomsPage = async ({ searchParams }) => {
   }
 
   const url = `${process.env.NEXT_PUBLIC_SERVER_URL}/rooms?${params.toString()}`;
-
   const res = await fetch(url, {
     cache: "no-store",
   });
@@ -28,9 +27,7 @@ const AllRoomsPage = async ({ searchParams }) => {
   return (
     <div className="min-h-screen bg-zinc-50 py-10">
       <div className="max-w-7xl mx-auto px-6">
-        <h1 className="text-4xl font-bold mb-10">
-          All Study Rooms
-        </h1>
+        <h1 className="text-4xl font-bold mb-10">All Study Rooms</h1>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           <aside className="lg:col-span-3">
@@ -61,4 +58,3 @@ const AllRoomsPage = async ({ searchParams }) => {
 };
 
 export default AllRoomsPage;
-

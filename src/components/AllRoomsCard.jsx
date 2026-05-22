@@ -54,14 +54,21 @@ const AllRoomsCard = ({ room }) => {
 
         {/* AMENITIES */}
         <div className="flex flex-wrap gap-2 pt-2">
-          {room.amenities?.slice(0, 3).map((item, index) => (
-            <span
-              key={index}
-              className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full"
-            >
-              {item}
-            </span>
-          ))}
+          {(Array.isArray(room.amenities)
+            ? room.amenities
+            : typeof room.amenities === "string"
+              ? room.amenities.split(",")
+              : []
+          )
+            .slice(0, 3)
+            .map((item, index) => (
+              <span
+                key={index}
+                className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full"
+              >
+                {item}
+              </span>
+            ))}
         </div>
 
         {/* BUTTON pushed to bottom */}
