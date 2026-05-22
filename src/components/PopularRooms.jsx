@@ -5,7 +5,7 @@ import { BsHouseDown } from "react-icons/bs";
 import { IoIosArrowDropright } from "react-icons/io";
 
 const PopularRoomsSection = async () => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/roomsData`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/rooms`, {
     cache: "no-store",
   });
 

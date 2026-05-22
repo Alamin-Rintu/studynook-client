@@ -18,7 +18,7 @@ const AllRoomsPage = async ({ searchParams }) => {
     params.set("floor", resolvedSearchParams.floor);
   }
 
-  const url = `${process.env.NEXT_PUBLIC_SERVER_URL}/roomsData?${params.toString()}`;
+  const url = `${process.env.NEXT_PUBLIC_SERVER_URL}/rooms?${params.toString()}`;
 
   const res = await fetch(url, {
     cache: "no-store",
